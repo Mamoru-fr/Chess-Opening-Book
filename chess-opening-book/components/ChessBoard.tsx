@@ -158,9 +158,16 @@ export default function ChessBoard({
     const highlightedColor = annotations.squares.find((s) => s.square === square)?.color;
 
     if (highlighted && highlightedColor) {
-      return `bg-chess-${highlightedColor}`;
+      const colorClasses: Record<string, string> = {
+        green: "bg-green-500",
+        red: "bg-red-500",
+        blue: "bg-blue-500",
+        yellow: "bg-yellow-400",
+        purple: "bg-purple-500",
+      };
+      return colorClasses[highlightedColor] || (isLight ? "light" : "dark");
     }
-    return isLight ? "bg-chess-light" : "bg-chess-dark";
+    return isLight ? "light" : "dark";
   };
 
   const isArrowBetween = (from: string, to: string) => {
@@ -198,7 +205,7 @@ export default function ChessBoard({
               key={square}
               className={`chess-square ${getSquareColor(square)} ${
                 isSelected ? "ring-2 ring-yellow-400" : ""
-              } ${isValidMove ? "bg-chess-highlight" : ""}`}
+              } ${isValidMove ? "highlight" : ""}`}
               style={{ width: size / 8, height: size / 8 }}
               onClick={() => handleSquareClick(square)}
               onContextMenu={(e) => handleSquareRightClick(e, square)}

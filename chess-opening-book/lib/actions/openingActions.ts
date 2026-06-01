@@ -1,5 +1,6 @@
 "use server";
 
+import { headers } from "next/headers";
 import { auth } from "@/lib/auth/auth";
 import { db } from "@/lib/db/drizzle";
 import { folders, openings, nodeAnnotations } from "@/lib/db/schema";
@@ -10,7 +11,7 @@ import { eq, and } from "drizzle-orm";
  */
 
 export async function createFolder(name: string, parentId?: number) {
-  const session = await auth.api.getSession();
+  const session = await auth.api.getSession({ headers: await headers() });
   if (!session?.user?.id) throw new Error("Unauthorized");
 
   const result = await db.insert(folders).values({
@@ -23,7 +24,7 @@ export async function createFolder(name: string, parentId?: number) {
 }
 
 export async function updateFolder(folderId: number, name: string) {
-  const session = await auth.api.getSession();
+  const session = await auth.api.getSession({ headers: await headers() });
   if (!session?.user?.id) throw new Error("Unauthorized");
 
   const folder = await db.query.folders.findFirst({
@@ -41,7 +42,7 @@ export async function updateFolder(folderId: number, name: string) {
 }
 
 export async function deleteFolder(folderId: number) {
-  const session = await auth.api.getSession();
+  const session = await auth.api.getSession({ headers: await headers() });
   if (!session?.user?.id) throw new Error("Unauthorized");
 
   const folder = await db.query.folders.findFirst({
@@ -55,7 +56,7 @@ export async function deleteFolder(folderId: number) {
 }
 
 export async function getUserFolders() {
-  const session = await auth.api.getSession();
+  const session = await auth.api.getSession({ headers: await headers() });
   if (!session?.user?.id) throw new Error("Unauthorized");
 
   return await db.query.folders.findMany({
@@ -72,7 +73,7 @@ export async function createOpening(
   folderId: number | null,
   description?: string
 ) {
-  const session = await auth.api.getSession();
+  const session = await auth.api.getSession({ headers: await headers() });
   if (!session?.user?.id) throw new Error("Unauthorized");
 
   const result = await db.insert(openings).values({
@@ -97,7 +98,7 @@ export async function updateOpening(
     pgn?: string;
   }
 ) {
-  const session = await auth.api.getSession();
+  const session = await auth.api.getSession({ headers: await headers() });
   if (!session?.user?.id) throw new Error("Unauthorized");
 
   const opening = await db.query.openings.findFirst({
@@ -118,7 +119,7 @@ export async function updateOpening(
 }
 
 export async function deleteOpening(openingId: number) {
-  const session = await auth.api.getSession();
+  const session = await auth.api.getSession({ headers: await headers() });
   if (!session?.user?.id) throw new Error("Unauthorized");
 
   const opening = await db.query.openings.findFirst({
@@ -132,7 +133,7 @@ export async function deleteOpening(openingId: number) {
 }
 
 export async function getUserOpenings(folderId?: number) {
-  const session = await auth.api.getSession();
+  const session = await auth.api.getSession({ headers: await headers() });
   if (!session?.user?.id) throw new Error("Unauthorized");
 
   if (folderId) {
@@ -147,7 +148,7 @@ export async function getUserOpenings(folderId?: number) {
 }
 
 export async function getOpening(openingId: number) {
-  const session = await auth.api.getSession();
+  const session = await auth.api.getSession({ headers: await headers() });
   if (!session?.user?.id) throw new Error("Unauthorized");
 
   return await db.query.openings.findFirst({
@@ -169,7 +170,7 @@ export async function saveNodeAnnotation(
     squaresData?: any[];
   }
 ) {
-  const session = await auth.api.getSession();
+  const session = await auth.api.getSession({ headers: await headers() });
   if (!session?.user?.id) throw new Error("Unauthorized");
 
   // Verify ownership
@@ -221,7 +222,7 @@ export async function getNodeAnnotation(openingId: number, nodeId: string) {
 }
 
 export async function getOpeningAnnotations(openingId: number) {
-  const session = await auth.api.getSession();
+  const session = await auth.api.getSession({ headers: await headers() });
   if (!session?.user?.id) throw new Error("Unauthorized");
 
   // Verify ownership
