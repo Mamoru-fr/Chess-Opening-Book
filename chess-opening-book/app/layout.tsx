@@ -1,34 +1,24 @@
 import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import { I18nProvider } from "@/context/I18nProvider";
 import "./globals.css";
-import {auth} from "@/lib/auth/auth";
-import {headers} from "next/headers";
-import {SessionProvider} from "@/context/SessionContext";
-import {I18nProvider} from "@/context/I18nProvider";
-import {LanguageDropdown} from "@/components/LanguageComponents/LanguageDropdown";
+
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "AMT Express",
-  description: "",
+  title: "Carnet d'Ouvertures d'Échecs",
+  description: "Gérez vos ouvertures d'échecs comme un pro",
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await auth.api.getSession({headers: await headers()});
-
   return (
-    <html lang="en">
-      <body
-        className={`antialiased`}
-      >
-        <I18nProvider>
-          <SessionProvider session={session}>
-            {children}
-            <LanguageDropdown />
-          </SessionProvider>
-        </I18nProvider>
+    <html lang="fr">
+      <body className={inter.className}>
+        <I18nProvider>{children}</I18nProvider>
       </body>
     </html>
   );

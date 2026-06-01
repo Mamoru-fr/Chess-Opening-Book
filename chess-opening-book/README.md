@@ -1,36 +1,156 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Chess Opening Book
 
-## Getting Started
+Un carnet d'ouvertures d'échecs professionnel inspiré de Chess.com, avec support complet pour l'analyse Stockfish, les tests d'ouvertures et les annotations visuelles.
 
-First, run the development server:
+## 🎯 Objectifs du Projet
+
+- 📚 **Organiser**: Dossiers et arbre d'ouvertures avec notation algébrique
+- 🎯 **Analyser**: Annotations visuelles + intégration Stockfish (meilleurs coups)
+- ✏️ **Pratiquer**: Modes Puzzle et Drill pour tester vos connaissances
+
+## 🚀 Démarrage Rapide
+
+### Prerequisites
+- Node.js 18+
+- PostgreSQL 12+
+- pnpm (recommandé)
+
+### Installation
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+# 1. Cloner et installer
+git clone <repo>
+cd chess-opening-book
+pnpm install
+
+# 2. Configurer l'environnement
+cp .env.example .env.local
+# Éditer .env.local avec vos credentials BD et clés d'authentification
+
+# 3. Générer & migrer la BD
+pnpm db:generate
+pnpm db:migrate
+
+# 4. Démarrer le serveur
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Ouvrir http://localhost:3000
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📁 Structure du Projet
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+chess-opening-book/
+├── app/
+│   ├── api/auth/[route]    # Endpoints authentification
+│   ├── auth/               # Pages signin/signup
+│   ├── dashboard/          # Dashboard principal
+│   ├── openings/           # Visualiseur ouvertures
+│   └── globals.css         # Styles globaux Chess.com
+├── components/
+│   ├── ChessBoard.tsx      # Plateau d'échecs interactif
+│   ├── OpeningTree.tsx     # Arbre d'ouvertures (ReactFlow)
+│   └── classicComponents/
+├── lib/
+│   ├── actions/
+│   │   └── openingActions.ts  # Server actions CRUD
+│   ├── auth/
+│   │   ├── auth.ts            # Configuration better-auth
+│   │   └── auth.client.ts     # Client auth
+│   ├── db/
+│   │   ├── schema.ts          # Schéma Drizzle ORM
+│   │   └── drizzle.ts         # Connexion BD
+│   └── chess/
+│       ├── chess.ts           # Logique jeu d'échecs
+│       └── stockfish.ts       # Intégration Stockfish
+├── locales/               # Traductions i18n
+└── tests/                 # Tests Playwright
+```
 
-## Learn More
+## 🔐 Authentification
 
-To learn more about Next.js, take a look at the following resources:
+- **Framework**: better-auth
+- **Method**: Email + Password
+- **Base de données**: PostgreSQL (Drizzle ORM)
+- **Session**: JWT HttpOnly cookies
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Pages:
+- `/auth/signin` - Connexion
+- `/auth/signup` - Inscription
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📊 Structure Base de Données
 
-## Deploy on Vercel
+### Tables principales:
+- `users` - Utilisateurs (id TEXT PK)
+- `folders` - Dossiers d'ouvertures
+- `openings` - Ouvertures avec nodesData/edgesData
+- `node_annotations` - Annotations (notes, flèches, carrés colorés)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🎮 Fonctionnalités Implémentées
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Phase 1 ✅
+- ✅ Schéma BD optimisé
+- ✅ Authentification avec better-auth
+- ✅ Server actions CRUD
+- ✅ Dashboard avec gestion dossiers/ouvertures
+- ✅ Visualiseur ouvertures (3 onglets)
+- ✅ Style Chess.com
+
+### Phase 2 🔄 (En cours)
+- 🔄 Drag & drop réorganisation nodes
+- 🔄 Collapse/expand branches
+- 🔄 Notation algébrique automatique
+- 🔄 Multi-select + coloration nodes
+
+### Phase 3 (À venir)
+- ⏳ Interactions plateau (Alt+Click flèches, Ctrl+Click carrés)
+- ⏳ Slider taille plateau
+- ⏳ Sauvegarde annotations en BD
+
+### Phase 4 (À venir)
+- ⏳ Onglet Analysis (Stockfish + meilleurs coups)
+- ⏳ Onglet Testing (Mode Puzzle + Mode Drill)
+
+## 🛠 Scripts NPM
+
+```bash
+pnpm dev            # Démarrer serveur dev
+pnpm build          # Build production
+pnpm start          # Démarrer serveur production
+pnpm lint           # Vérifier code
+pnpm db:generate    # Générer migrations Drizzle
+pnpm db:migrate     # Appliquer migrations
+pnpm test:e2e       # Tester avec Playwright
+```
+
+## 🎨 Design
+
+- **Inspiration**: Chess.com
+- **Framework UI**: Tailwind CSS
+- **Composants**: Lucide React
+- **Graphe**: ReactFlow
+
+## 🔧 Variables d'Environnement
+
+```env
+# Base de données PostgreSQL
+DATABASE_URL=postgresql://user:pass@localhost:5432/db
+
+# Authentication better-auth
+BETTER_AUTH_SECRET=<generate-with-openssl-rand-hex-32>
+BETTER_AUTH_URL=http://localhost:3000
+
+# Application
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+```
+
+## 📚 Technologies
+
+- **Frontend**: Next.js 16, React 19, TypeScript
+- **Backend**: Next.js API Routes, better-auth
+- **Base de données**: PostgreSQL + Drizzle ORM
+- **UI**: Tailwind CSS, Lucide React
+- **Graphe**: ReactFlow
+- **Échecs**: chess.js, Stockfish WASM
+- **I18n**: i18next
+- **Tests**: Playwright

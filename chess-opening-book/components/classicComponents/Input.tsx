@@ -21,13 +21,10 @@ export function Input({ placeholder, className, type, value, onChange, name, req
         <div className="relative w-full">
             <input
                 className={cn(
-                    "w-full px-4 py-3.5 md:px-5 md:py-4 lg:px-6 lg:py-4.5",
-                    "text-base md:text-lg border-2 border-gray-200",
-                    "rounded-lg md:rounded-xl",
-                    "outline-none transition-all duration-300",
-                    "bg-white font-sans text-gray-800",
-                    "focus:border-blue-500 focus:ring-2 focus:ring-blue-200",
-                    "placeholder:text-gray-400",
+                    "w-full rounded-xl border border-[#4a463f] px-4 py-3.5 md:px-5 md:py-4",
+                    "text-base md:text-lg outline-none transition-all duration-200",
+                    "bg-[#1f1d1b] text-[#f4f1ea] shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]",
+                    "placeholder:text-[#8f8a80] focus:border-[#81b64c] focus:ring-2 focus:ring-[#81b64c]/20",
                     isPassword && "pr-12",
                     className
                 )}

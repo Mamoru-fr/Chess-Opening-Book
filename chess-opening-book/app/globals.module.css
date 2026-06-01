@@ -1,0 +1,126 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #1b1b1b;
+  --panel: #262421;
+  --panel-strong: #312d29;
+  --panel-soft: #2d2926;
+  --line: #3d3a36;
+  --text: #f4f1ea;
+  --muted: #b8b2a8;
+  --accent: #81b64c;
+  --accent-hover: #95c95c;
+  --board-light: #eeeed2;
+  --board-dark: #769656;
+  --board-highlight: #f6f669;
+}
+
+html {
+  background: var(--bg);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  font-family: Inter, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background:
+    radial-gradient(circle at top left, rgba(129, 182, 76, 0.16), transparent 28%),
+    radial-gradient(circle at top right, rgba(255, 255, 255, 0.06), transparent 22%),
+    linear-gradient(180deg, #1f1d1b 0%, #171615 100%);
+  color: var(--text);
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.7), transparent 85%);
+  opacity: 0.35;
+}
+
+.chess-board {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+  width: 100%;
+  height: 100%;
+  background: #302d29;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.38);
+}
+
+.chess-square {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  transition: filter 120ms ease, transform 120ms ease;
+}
+
+.chess-square:hover {
+  filter: brightness(1.05);
+}
+
+.chess-square.light {
+  background-color: var(--board-light);
+}
+
+.chess-square.dark {
+  background-color: var(--board-dark);
+}
+
+.chess-square.highlight {
+  background-color: var(--board-highlight);
+}
+
+.chess-piece {
+  font-size: 2rem;
+  cursor: pointer;
+  user-select: none;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
+}
+
+.opening-tree {
+  width: 100%;
+  height: 600px;
+  background: linear-gradient(180deg, rgba(38, 36, 33, 0.98), rgba(30, 28, 25, 0.98));
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: 16px;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.32);
+}
+
+.node {
+  background: rgba(49, 45, 41, 0.98);
+  border: 1px solid #4a463f;
+  border-radius: 14px;
+  padding: 10px 14px;
+  color: var(--text);
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+}
+
+.node.selected {
+  background-color: var(--accent);
+  color: #111;
+  border-color: var(--accent);
+}
+
+.edge {
+  stroke: #7c7569;
+  stroke-width: 2;
+}
+
+.edge.selected {
+  stroke: var(--accent);
+}
