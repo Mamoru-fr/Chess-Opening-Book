@@ -39,23 +39,23 @@ export default function SignUp() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#1a1a1a] to-[#0f0f0f] flex items-center justify-center px-4">
+    <div className="min-h-screen bg-linear-to-b from-[#1a1a1a] to-[#0f0f0f] flex items-center justify-center px-4">
       <div className="w-full max-w-md">
-        <div className="bg-[#262421] border border-[#3d3a36] rounded-lg p-8 space-y-6">
+        <div className="bg-[#262421] border border-[#4d4a46] rounded-2xl p-8 sm:p-10 space-y-6 shadow-2xl shadow-black/40">
           <div className="text-center">
-            <div className="text-4xl mb-2">♔</div>
-            <h1 className="text-2xl font-bold text-[#f4f1ea]">Créer un compte</h1>
-            <p className="text-[#b8b2a8] text-sm mt-1">Chess Opening Book</p>
+            <div className="text-5xl mb-3">♔</div>
+            <h1 className="text-3xl font-bold text-[#f4f1ea]">Créer un compte</h1>
+            <p className="text-[#b8b2a8] text-sm mt-2">Chess Opening Book</p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-5">
             <div>
               <label className="block text-[#f4f1ea] text-sm font-semibold mb-2">Nom</label>
               <input
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full px-4 py-2 bg-[#1a1a1a] border border-[#3d3a36] rounded-lg text-[#f4f1ea] placeholder-[#b8b2a8] focus:outline-none focus:border-[#81b64c]"
+                className="w-full px-4 py-3 bg-[#1a1a1a] border border-[#4d4a46] rounded-lg text-[#f4f1ea] placeholder-[#6d6a66] focus:outline-none focus:border-[#81b64c] focus:ring-1 focus:ring-[#81b64c] transition-all"
                 placeholder="Votre nom"
                 required
               />
@@ -67,7 +67,7 @@ export default function SignUp() {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-2 bg-[#1a1a1a] border border-[#3d3a36] rounded-lg text-[#f4f1ea] placeholder-[#b8b2a8] focus:outline-none focus:border-[#81b64c]"
+                className="w-full px-4 py-3 bg-[#1a1a1a] border border-[#4d4a46] rounded-lg text-[#f4f1ea] placeholder-[#6d6a66] focus:outline-none focus:border-[#81b64c] focus:ring-1 focus:ring-[#81b64c] transition-all"
                 placeholder="votre@email.com"
                 required
               />
@@ -79,18 +79,18 @@ export default function SignUp() {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-2 bg-[#1a1a1a] border border-[#3d3a36] rounded-lg text-[#f4f1ea] placeholder-[#b8b2a8] focus:outline-none focus:border-[#81b64c]"
+                className="w-full px-4 py-3 bg-[#1a1a1a] border border-[#4d4a46] rounded-lg text-[#f4f1ea] placeholder-[#6d6a66] focus:outline-none focus:border-[#81b64c] focus:ring-1 focus:ring-[#81b64c] transition-all"
                 placeholder="••••••••"
                 required
               />
             </div>
 
-            {error && <div className="p-3 bg-red-600/20 border border-red-600/30 rounded text-red-400 text-sm">{error}</div>}
+            {error && <div className="p-3 bg-red-600/20 border border-red-600/30 rounded-lg text-red-400 text-sm">{error}</div>}
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full px-4 py-2 bg-[#81b64c] hover:bg-[#95c95c] text-white font-semibold rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full px-4 py-3 bg-[#81b64c] hover:bg-[#95c95c] text-[#111] font-bold rounded-lg transition-all hover:shadow-lg hover:shadow-[#81b64c]/20 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? "Inscription..." : "Créer un compte"}
             </button>
@@ -98,7 +98,7 @@ export default function SignUp() {
 
           <div className="text-center text-[#b8b2a8] text-sm">
             Déjà un compte ?{" "}
-            <Link href="/auth/signin" className="text-[#81b64c] hover:underline">
+            <Link href="/auth/signin" className="text-[#81b64c] hover:text-[#95c95c] font-semibold transition-colors">
               Se connecter
             </Link>
           </div>

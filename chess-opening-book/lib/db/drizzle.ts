@@ -11,4 +11,5 @@ const db = drizzle(sql, { schema });
 
 console.log('✅ Database connection initialized');
 
+export { db };
 export default db;

@@ -16,7 +16,7 @@ test.describe('Opening flow', () => {
     await expect(node).toBeVisible();
     const handle = await node.elementHandle();
     if (!handle) throw new Error('node handle missing');
-    await page.evaluate((el: HTMLElement) => {
+    await page.evaluate((el) => {
       el.dispatchEvent(new MouseEvent('dblclick', { bubbles: true, cancelable: true }));
     }, handle);
     await page.waitForTimeout(200);

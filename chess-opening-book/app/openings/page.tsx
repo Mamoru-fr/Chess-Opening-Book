@@ -35,7 +35,7 @@ export default function OpeningsPage() {
 
   return (
     <div className="space-y-8">
-      <div className="border-b border-[#3d3a36] pb-6">
+      <div className="border-b border-[#2d2926] pb-6">
         <h1 className="text-4xl font-bold text-[#f4f1ea] mb-2">Toutes les Ouvertures</h1>
         <p className="text-[#b8b2a8]">{openings.length} ouvertures créées</p>
       </div>
@@ -50,7 +50,7 @@ export default function OpeningsPage() {
             <Link
               key={opening.id}
               href={`/openings/${opening.id}`}
-              className="p-4 bg-[#262421] border border-[#3d3a36] rounded-lg hover:border-[#81b64c] hover:bg-[#2a2420] transition-all cursor-pointer group"
+              className="p-4 bg-[#262421] border border-[#2d2926] rounded-xl hover:border-[#81b64c] hover:bg-[#2a2420] transition-all duration-200 cursor-pointer group shadow-sm shadow-black/10 hover:shadow-md hover:shadow-black/20"
             >
               <h3 className="font-semibold text-[#f4f1ea] group-hover:text-[#81b64c] transition-colors mb-2">
                 {opening.name}

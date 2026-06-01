@@ -6,12 +6,20 @@ import { useSession } from "@/lib/auth/auth.client";
 import { useRouter } from "next/navigation";
 
 export default function RootLayout({ children }: { children: ReactNode }) {
-  const session = useSession();
+  const { data: session, isPending } = useSession();
   const router = useRouter();
 
-  if (!session) {
+  if (isPending) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-[#1a1a1a] to-[#0f0f0f] text-white flex items-center justify-center">
+      <div className="min-h-screen bg-linear-to-b from-[#1a1a1a] to-[#0f0f0f] text-white flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-[#81b64c] border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  if (!session?.user) {
+    return (
+      <div className="min-h-screen bg-linear-to-b from-[#1a1a1a] to-[#0f0f0f] text-white flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-4xl font-bold mb-4">Chess Opening Book</h1>
           <p className="text-gray-400 mb-8">Connectez-vous pour continuer</p>
@@ -24,9 +32,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#1a1a1a] to-[#0f0f0f]">
+    <div className="min-h-screen bg-linear-to-b from-[#1a1a1a] to-[#0f0f0f]">
       {/* Navigation */}
-      <nav className="border-b border-[#3d3a36] bg-[#262421]/90 backdrop-blur">
+      <nav className="border-b border-[#2d2926] bg-[#262421]/90 backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-8">
             <Link href="/dashboard" className="flex items-center gap-2">

@@ -19,7 +19,7 @@ export async function createFolder(name: string, parentId?: number) {
     parentId: parentId || null,
   }).returning();
 
-  return result[0];
+  return (result as any[])[0];
 }
 
 export async function updateFolder(folderId: number, name: string) {

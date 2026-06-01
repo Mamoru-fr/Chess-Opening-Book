@@ -6,6 +6,7 @@ import dynamic from "next/dynamic";
 import { Chess } from "chess.js";
 import { getOpening, getOpeningAnnotations, updateOpening } from "@/lib/actions/openingActions";
 import { Node, Edge } from "@xyflow/react";
+import { OpeningNodeData } from "@/lib/store";
 import { Loader } from "lucide-react";
 
 const OpeningTree = dynamic(() => import("@/components/OpeningTree"), { ssr: false });
@@ -19,7 +20,7 @@ export default function OpeningPage() {
   const [opening, setOpening] = useState<any>(null);
   const [annotations, setAnnotations] = useState<any[]>([]);
   const [chess, setChess] = useState<Chess | null>(null);
-  const [nodes, setNodes] = useState<Node[]>([]);
+  const [nodes, setNodes] = useState<Node<OpeningNodeData>[]>([]);
   const [edges, setEdges] = useState<Edge[]>([]);
   const [selectedNode, setSelectedNode] = useState<string | null>(null);
   const [boardSize, setBoardSize] = useState(400);
@@ -46,8 +47,8 @@ export default function OpeningPage() {
       setOpening(openingData);
       setAnnotations(annotationsData || []);
 
-      if (openingData?.nodesData) setNodes(openingData.nodesData);
-      if (openingData?.edgesData) setEdges(openingData.edgesData);
+      if (openingData?.nodesData) setNodes(openingData.nodesData as Node<OpeningNodeData>[]);
+      if (openingData?.edgesData) setEdges(openingData.edgesData as Edge[]);
     } catch (err) {
       console.error("Failed to load opening:", err);
       router.push("/dashboard");
@@ -86,7 +87,7 @@ export default function OpeningPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="border-b border-[#3d3a36] pb-6">
+      <div className="border-b border-[#2d2926] pb-6">
         <div className="flex items-center justify-between mb-2">
           <h1 className="text-3xl font-bold text-[#f4f1ea]">{opening.name}</h1>
           <button
@@ -100,7 +101,7 @@ export default function OpeningPage() {
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-2 border-b border-[#3d3a36]">
+      <div className="flex gap-2 border-b border-[#2d2926]">
         {(["editor", "analysis", "testing"] as const).map((tab) => (
           <button
             key={tab}
@@ -123,7 +124,7 @@ export default function OpeningPage() {
         {currentTab === "editor" && (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Opening Tree */}
-            <div className="lg:col-span-2 bg-[#262421] border border-[#3d3a36] rounded-lg p-4" style={{ height: "600px" }}>
+            <div className="lg:col-span-2 bg-[#262421] border border-[#2d2926] rounded-xl p-4 shadow-lg shadow-black/20" style={{ height: "600px" }}>
               {nodes.length > 0 ? (
                 <OpeningTree
                   nodes={nodes}
@@ -131,7 +132,7 @@ export default function OpeningPage() {
                   onNodeClick={setSelectedNode}
                   onAddNode={(parentId, move) => {
                     const newNodeId = `node_${Date.now()}`;
-                    const newNode: Node = {
+                    const newNode: Node<OpeningNodeData> = {
                       id: newNodeId,
                       data: { label: move, move },
                       position: { x: Math.random() * 300, y: Math.random() * 300 },
@@ -150,7 +151,7 @@ export default function OpeningPage() {
 
             {/* Board */}
             <div className="flex flex-col gap-4">
-              <div className="bg-[#262421] border border-[#3d3a36] rounded-lg p-4">
+              <div className="bg-[#262421] border border-[#2d2926] rounded-xl p-4">
                 <label className="block text-[#f4f1ea] text-sm font-semibold mb-2">Taille du plateau</label>
                 <input
                   type="range"
@@ -163,7 +164,7 @@ export default function OpeningPage() {
                 <span className="text-[#b8b2a8] text-sm">{boardSize}px</span>
               </div>
 
-              <div className="bg-[#262421] border border-[#3d3a36] rounded-lg p-4 flex justify-center">
+              <div className="bg-[#262421] border border-[#2d2926] rounded-xl p-4 flex justify-center">
                 <ChessBoard
                   chess={chess}
                   size={boardSize}
@@ -184,13 +185,13 @@ export default function OpeningPage() {
         )}
 
         {currentTab === "analysis" && (
-          <div className="bg-[#262421] border border-[#3d3a36] rounded-lg p-6 text-[#b8b2a8]">
+          <div className="bg-[#262421] border border-[#2d2926] rounded-xl p-6 text-[#b8b2a8]">
             <p>Onglet Analyse (à implémenter - Stockfish + meilleurs coups)</p>
           </div>
         )}
 
         {currentTab === "testing" && (
-          <div className="bg-[#262421] border border-[#3d3a36] rounded-lg p-6 text-[#b8b2a8]">
+          <div className="bg-[#262421] border border-[#2d2926] rounded-xl p-6 text-[#b8b2a8]">
             <p>Onglet Test (à implémenter - Mode Puzzle & Mode Drill)</p>
           </div>
         )}

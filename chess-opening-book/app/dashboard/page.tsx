@@ -75,7 +75,7 @@ export default function Dashboard() {
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div className="border-b border-[#3d3a36] pb-6">
+      <div className="border-b border-[#2d2926] pb-6">
         <h1 className="text-4xl font-bold text-[#f4f1ea] mb-2">Carnet d'Ouvertures</h1>
         <p className="text-[#b8b2a8]">Gérez vos ouvertures d'échecs</p>
       </div>
@@ -83,7 +83,7 @@ export default function Dashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Folders Section */}
         <div className="lg:col-span-1">
-          <div className="bg-[#262421] border border-[#3d3a36] rounded-lg p-6">
+          <div className="bg-[#262421] border border-[#2d2926] rounded-xl p-6 shadow-lg shadow-black/20">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-bold text-[#f4f1ea]">Dossiers</h2>
               <button
@@ -101,7 +101,7 @@ export default function Dashboard() {
                   value={newFolderName}
                   onChange={(e) => setNewFolderName(e.target.value)}
                   placeholder="Nom du dossier..."
-                  className="w-full px-3 py-2 bg-[#1a1a1a] border border-[#3d3a36] rounded text-[#f4f1ea] placeholder-[#b8b2a8]"
+                  className="w-full px-3 py-2 bg-[#1a1a1a] border border-[#2d2926] rounded-lg text-[#f4f1ea] placeholder-[#b8b2a8] focus:ring-1 focus:ring-[#81b64c] focus:outline-none transition-colors"
                   autoFocus
                 />
                 <div className="flex gap-2">
@@ -152,7 +152,7 @@ export default function Dashboard() {
 
         {/* Openings Section */}
         <div className="lg:col-span-2">
-          <div className="bg-[#262421] border border-[#3d3a36] rounded-lg p-6">
+          <div className="bg-[#262421] border border-[#2d2926] rounded-xl p-6 shadow-lg shadow-black/20">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-xl font-bold text-[#f4f1ea]">
                 {selectedFolder ? `Dossier ${folders.find((f) => f.id === selectedFolder)?.name}` : "Toutes les ouvertures"}
@@ -166,13 +166,13 @@ export default function Dashboard() {
             </div>
 
             {showNewOpening && (
-              <form onSubmit={handleCreateOpening} className="mb-6 space-y-3 p-4 bg-[#1a1a1a] rounded border border-[#3d3a36]">
+              <form onSubmit={handleCreateOpening} className="mb-6 space-y-3 p-4 bg-[#1a1a1a] rounded-lg border border-[#2d2926]">
                 <input
                   type="text"
                   value={newOpeningName}
                   onChange={(e) => setNewOpeningName(e.target.value)}
                   placeholder="Nom de l'ouverture..."
-                  className="w-full px-3 py-2 bg-[#262421] border border-[#3d3a36] rounded text-[#f4f1ea] placeholder-[#b8b2a8]"
+                  className="w-full px-3 py-2 bg-[#262421] border border-[#2d2926] rounded-lg text-[#f4f1ea] placeholder-[#b8b2a8] focus:ring-1 focus:ring-[#81b64c] focus:outline-none transition-colors"
                   autoFocus
                 />
                 <div className="flex gap-2">
@@ -201,7 +201,7 @@ export default function Dashboard() {
                   <Link
                     key={opening.id}
                     href={`/openings/${opening.id}`}
-                    className="p-4 bg-[#1a1a1a] border border-[#3d3a36] rounded-lg hover:border-[#81b64c] hover:bg-[#2a2420] transition-all cursor-pointer group"
+                    className="p-4 bg-[#1a1a1a] border border-[#2d2926] rounded-xl hover:border-[#81b64c] hover:bg-[#2a2420] transition-all duration-200 cursor-pointer group shadow-sm shadow-black/10 hover:shadow-md hover:shadow-black/20"
                   >
                     <h3 className="font-semibold text-[#f4f1ea] group-hover:text-[#81b64c] transition-colors mb-2">
                       {opening.name}

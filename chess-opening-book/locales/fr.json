@@ -1,8 +1,7 @@
 {
     "Authentication": {
-        "Title": "Bienvenue chez AMT Express",
-        "NamePlaceholder": "Entrez votre nom complet",
-        "NameWarning": "Votre nom sera visible par les conducteurs",
+        "Title": "Carnet d'Ouvertures d'Échecs",
+        "NamePlaceholder": "Entrez votre nom",
         "EmailPlaceholder": "Entrez votre email",
         "PasswordPlaceholder": "Entrez votre mot de passe",
         "ConfirmPasswordPlaceholder": "Confirmez votre mot de passe",

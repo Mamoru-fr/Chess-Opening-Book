@@ -26,7 +26,6 @@ describe('Translations', () => {
         const authKeys = [
             'Title',
             'NamePlaceholder',
-            'NameWarning',
             'EmailPlaceholder',
             'PasswordPlaceholder',
             'ConfirmPasswordPlaceholder',
@@ -210,7 +209,6 @@ describe('Translations', () => {
             'Authentication.PasswordPlaceholder',
             'Authentication.Login.LoginButton',
             'Authentication.NamePlaceholder',
-            'Authentication.NameWarning',
             'Authentication.ConfirmPasswordPlaceholder',
             'Authentication.Register.RegisterButton',
             'Authentication.LoginViewButton',

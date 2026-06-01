@@ -2,16 +2,28 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import { useSession as useBetterAuthSession } from "@/lib/auth/auth.client";
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
-  const { data: session } = useBetterAuthSession();
+  const { data: session, isPending } = useBetterAuthSession();
   const router = useRouter();
 
-  // Redirect if not authenticated
+  useEffect(() => {
+    if (!isPending && !session?.user) {
+      router.push("/auth/signin");
+    }
+  }, [session, isPending, router]);
+
+  if (isPending) {
+    return (
+      <div className="min-h-screen bg-linear-to-b from-[#1a1a1a] to-[#0f0f0f] flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-[#81b64c] border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
+
   if (!session?.user) {
-    router.push("/auth/signin");
     return null;
   }
 
@@ -21,9 +33,9 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#1a1a1a] to-[#0f0f0f]">
+    <div className="min-h-screen bg-linear-to-b from-[#1a1a1a] to-[#0f0f0f]">
       {/* Navigation */}
-      <nav className="border-b border-[#3d3a36] bg-[#262421]/90 backdrop-blur sticky top-0 z-50">
+      <nav className="border-b border-[#2d2926] bg-[#262421]/90 backdrop-blur-md sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-8">
             <Link href="/dashboard" className="flex items-center gap-2 hover:opacity-80 transition-opacity">

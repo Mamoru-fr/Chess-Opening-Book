@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 :root {
   --bg: #1a1a1a;
@@ -51,6 +49,12 @@ body::before {
 /* Smooth transitions for interactive elements */
 input, button, a {
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Reset link colors globally */
+a {
+  color: inherit;
+  text-decoration: none;
 }
 
 /* Base button styles */
