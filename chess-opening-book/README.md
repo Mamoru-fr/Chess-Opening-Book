@@ -1,18 +1,18 @@
 # Chess Opening Book
 
-Un carnet d'ouvertures d'échecs professionnel inspiré de Chess.com, avec support complet pour l'analyse Stockfish, les tests d'ouvertures et les annotations visuelles.
+Un carnet d'ouvertures d'échecs professionnel inspiré de Chess.com : arbres d'ouvertures annotables, drill de test, et (à venir, Phase C) l'analyse IA via Stockfish.
 
 ## 🎯 Objectifs du Projet
 
 - 📚 **Organiser**: Dossiers et arbre d'ouvertures avec notation algébrique
-- 🎯 **Analyser**: Annotations visuelles + intégration Stockfish (meilleurs coups)
-- ✏️ **Pratiquer**: Modes Puzzle et Drill pour tester vos connaissances
+- 🎯 **Analyser**: Annotations visuelles + statistiques de coups (analyse IA Stockfish : Phase C)
+- ✏️ **Pratiquer**: Mode Drill pour tester vos connaissances (Mode Puzzle : à venir)
 
 ## 🚀 Démarrage Rapide
 
 ### Prerequisites
 - Node.js 18+
-- PostgreSQL 12+
+- PostgreSQL (Neon serverless — driver `neon-http`)
 - pnpm (recommandé)
 
 ### Installation
@@ -61,18 +61,17 @@ chess-opening-book/
 │   │   ├── schema.ts          # Schéma Drizzle ORM
 │   │   └── drizzle.ts         # Connexion BD
 │   └── chess/
-│       ├── chess.ts           # Logique jeu d'échecs
-│       └── stockfish.ts       # Intégration Stockfish
+│       └── chess.ts           # Helpers jeu d'échecs
 ├── locales/               # Traductions i18n
 └── tests/                 # Tests Playwright
 ```
 
 ## 🔐 Authentification
 
-- **Framework**: better-auth
+- **Framework**: better-auth (sans plugin admin — rôles simples)
 - **Method**: Email + Password
-- **Base de données**: PostgreSQL (Drizzle ORM)
-- **Session**: JWT HttpOnly cookies
+- **Base de données**: PostgreSQL/Neon (Drizzle ORM)
+- **Session**: cookies HttpOnly gérés par better-auth
 
 Pages:
 - `/auth/signin` - Connexion
@@ -81,7 +80,7 @@ Pages:
 ## 📊 Structure Base de Données
 
 ### Tables principales:
-- `users` - Utilisateurs (id TEXT PK)
+- `users` - Utilisateurs (id TEXT PK, role TEXT default 'user')
 - `folders` - Dossiers d'ouvertures
 - `openings` - Ouvertures avec nodesData/edgesData
 - `node_annotations` - Annotations (notes, flèches, carrés colorés)
@@ -107,9 +106,10 @@ Pages:
 - ⏳ Slider taille plateau
 - ⏳ Sauvegarde annotations en BD
 
-### Phase 4 (À venir)
-- ⏳ Onglet Analysis (Stockfish + meilleurs coups)
-- ⏳ Onglet Testing (Mode Puzzle + Mode Drill)
+### Phase 4 (À venir) — voir PROJET.md
+- ⏳ Analyse réelle par IA (Stockfish via worker UCI — Phase C)
+- ⏳ Drill sur le plateau (cliquer les coups, pas seulement les taper)
+- ⏳ Confronter des ouvertures / jouer son répertoire contre l'IA
 
 ## 🛠 Scripts NPM
 
@@ -118,8 +118,11 @@ pnpm dev            # Démarrer serveur dev
 pnpm build          # Build production
 pnpm start          # Démarrer serveur production
 pnpm lint           # Vérifier code
+pnpm typecheck      # TypeScript strict
+pnpm test:unit      # Vitest
 pnpm db:generate    # Générer migrations Drizzle
 pnpm db:migrate     # Appliquer migrations
+pnpm db:push        # Pousser le schéma directement (dev rapide)
 pnpm test:e2e       # Tester avec Playwright
 ```
 
@@ -133,7 +136,7 @@ pnpm test:e2e       # Tester avec Playwright
 ## 🔧 Variables d'Environnement
 
 ```env
-# Base de données PostgreSQL
+# Base de données PostgreSQL (Neon)
 DATABASE_URL=postgresql://user:pass@localhost:5432/db
 
 # Authentication better-auth
@@ -148,9 +151,9 @@ NEXT_PUBLIC_APP_URL=http://localhost:3000
 
 - **Frontend**: Next.js 16, React 19, TypeScript
 - **Backend**: Next.js API Routes, better-auth
-- **Base de données**: PostgreSQL + Drizzle ORM
+- **Base de données**: PostgreSQL (Neon) + Drizzle ORM
 - **UI**: Tailwind CSS, Lucide React
 - **Graphe**: ReactFlow
-- **Échecs**: chess.js, Stockfish WASM
+- **Échecs**: chess.js (Stockfish WASM : réintégration prévue en Phase C)
 - **I18n**: i18next
-- **Tests**: Playwright
+- **Tests**: Playwright, Vitest
