@@ -36,7 +36,14 @@ Constats détaillés : voir commit « docs: audit session 1 » (1er push du 17/1
 15. ⏳ pnpm-lock.yaml à régénérer (`pnpm install`) : les deps ont changé, la sandbox ne permet pas l'install — **première commande à lancer localement**.
 16. ⏳ Gate non exécutée : `pnpm typecheck && pnpm lint && pnpm build && pnpm test:unit` à lancer localement (installation impossible en sandbox) — voir « À vérifier ».
 
-## À vérifier par Alexis (gate de session — avant de considérer A+B acquis)
+## Gate de session — résultats Alexis, 17/10/2026 au soir
+
+- ✅ `pnpm install` (lockfile régénéré)
+- ✅ `pnpm db:push` (schéma appliqué sur Neon)
+- ✅ `pnpm typecheck` (0 erreur)
+- ⚠️ `pnpm lint` : 11 erreurs react/no-unescaped-entities + 2 warnings (états analysis* orphelins) → corrigés (règle off : convention UTF-8 maison, zéro entité HTML ; états supprimés)
+- ⏳ `pnpm build` à relancer (le lint bloquait)
+- ⏳ Test de bout en bout (`pnpm dev` : signup → ouverture → e4 → sauvegarde → déconnexion) à faire
 1. `pnpm install` (régénère le lockfile)
 2. `cp .env.example .env.local` + remplir DATABASE_URL (Neon) et BETTER_AUTH_SECRET
 3. `pnpm db:generate && pnpm db:push` (ou migrate)
@@ -59,4 +66,5 @@ Constats détaillés : voir commit « docs: audit session 1 » (1er push du 17/1
 - Build vérifié, déploiement (Vercel+Neon présumé), transfert vers l'org alexis-aam-santos à maturité.
 
 ## Changelog
+- **17/10/2026 (gate round 1)** : db:push ✓, typecheck ✓, lint 11+2 → règle no-unescaped-entities off (UTF-8 maison), états orphelins analysisLoading/analysisBestMove supprimés. Build et test e2e manuel restants.
 - **17/10/2026 (session 1, Ada)** : audit complet (19 constats, 6 bloquants + 1 découvert en passant) → PROJET.md/AGENTS.md/.env.example créés ; Phase A exécutée (6 corrections) ; Phase B exécutée (12 corrections + 7 fichiers morts supprimés : signActions, SessionContext, isValidUserRole, database_types/auth, stockfish.ts, lib/store.ts, test-results) ; landing et README rendus honnêtes sur Stockfish (Phase C). Gate d'exécution à lancer par Alexis (sandbox sans install).

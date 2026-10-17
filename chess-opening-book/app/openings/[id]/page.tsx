@@ -65,8 +65,6 @@ export default function OpeningPage() {
   const [isSaving, setIsSaving] = useState(false);
   const [statusMessage, setStatusMessage] = useState("");
 
-  const [analysisLoading, setAnalysisLoading] = useState(false);
-  const [analysisBestMove, setAnalysisBestMove] = useState<string>("-");
   const [analysisTopMoves, setAnalysisTopMoves] = useState<Array<{ move: string; count: number }>>([]);
 
   const [folders, setFolders] = useState<Folder[]>([]);
@@ -242,8 +240,6 @@ export default function OpeningPage() {
     useEffect(() => {
       if (currentTab !== "analysis") return;
       // Analyse IA (Stockfish) : debranchee en session 1, reintegration prevue en Phase C (PROJET.md)
-      setAnalysisLoading(false);
-      setAnalysisBestMove("-");
       
       // Analyze popular moves from database
       const moveCount = new Map<string, number>();

@@ -8,7 +8,6 @@ const eslintConfig = defineConfig([
   {
     rules: {
       // Convention maison : UTF-8 partout, zéro entité HTML dans le JSX
-      // (d&apos;échecs reste d&apos;échecs — pas de &apos;)
       "react/no-unescaped-entities": "off",
     },
   },
