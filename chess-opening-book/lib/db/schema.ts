@@ -1,7 +1,4 @@
-import {pgTable, serial, varchar, timestamp, integer, boolean, text, pgEnum, index, jsonb} from "drizzle-orm/pg-core";
-
-// Enums
-export const userRoleEnum = pgEnum('user_role', ['admin', 'driver', 'customer']);
+import {pgTable, serial, varchar, timestamp, integer, boolean, text, index, jsonb} from "drizzle-orm/pg-core";
 
 // Users Table
 export const users = pgTable("users", {
@@ -15,7 +12,7 @@ export const users = pgTable("users", {
         .defaultNow()
         .$onUpdate(() => /* @__PURE__ */ new Date())
         .notNull(),
-    role: userRoleEnum("role"),
+    role: text("role").default("user"),
     banned: boolean("banned").default(false),
     banReason: text("ban_reason"),
     banExpires: timestamp("ban_expires"),

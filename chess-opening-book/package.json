@@ -1,49 +1,44 @@
 {
   "name": "chess-opening-book",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "db:migrate": "drizzle-kit generate && drizzle-kit migrate",
-    "db:generate": "drizzle-kit generate && drizzle-kit push"
-    ,"test:e2e": "playwright test"
+    "typecheck": "tsc --noEmit",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:push": "drizzle-kit push",
+    "test:unit": "vitest run",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
+    "@neondatabase/serverless": "^1.0.2",
     "@xyflow/react": "^12.0.0",
+    "better-auth": "^1.4.10",
     "chess.js": "^1.0.0",
+    "dotenv": "^17.2.3",
+    "drizzle-orm": "^0.45.1",
     "i18next": "^25.7.4",
     "lucide-react": "^0.562.0",
     "next": "16.1.1",
-    "pg": "^8.21.0",
     "react": "19.2.3",
-    "react-dnd": "^16.0.1",
-    "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "19.2.3",
-    "react-i18next": "^16.5.1",
-    "stockfish.wasm": "^0.10.0",
-    "tsx": "^4.21.0",
-    "vitest": "^4.0.16",
-    "zustand": "^4.4.7"
+    "react-i18next": "^16.5.1"
   },
   "devDependencies": {
-    "@neondatabase/serverless": "^1.0.2",
     "@playwright/test": "^1.60.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
-    "@types/pg": "^8.20.0",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "autoprefixer": "^10.4.16",
-    "better-auth": "^1.4.10",
-    "dotenv": "^17.2.3",
     "drizzle-kit": "^0.31.8",
-    "drizzle-orm": "^0.45.1",
     "eslint": "^9",
     "eslint-config-next": "16.1.1",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^4.0.16"
   }
 }

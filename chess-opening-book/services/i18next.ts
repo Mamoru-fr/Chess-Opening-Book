@@ -9,10 +9,10 @@ export const languageResources = {
 }
 
 i18next.use(initReactI18next).init({
-    lng: 'en',
-    fallbackLng: 'en',
+    lng: 'fr',
+    fallbackLng: 'fr',
     compatibilityJSON: 'v4',
-    debug: true,
+    debug: false,
     resources: languageResources,
     interpolation: {
         escapeValue: false,

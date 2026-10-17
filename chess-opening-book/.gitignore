@@ -1,4 +1,4 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# See https://help.github.com/articles/ignoring-files/ for more information.
 
 # dependencies
 /node_modules
@@ -40,6 +40,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# Drizzle
-/.drizzle
-/drizzle
+# Drizzle — les migrations (drizzle/) sont versionnées ; seuls les meta locaux sont ignorés
+/drizzle/meta
+
+# artefacts de test
+/test-results/
+/playwright-report/
