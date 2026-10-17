@@ -16,7 +16,7 @@ export default function Home() {
               Se connecter
             </Link>
             <Link href="/auth/signup" className="px-4 py-2 text-sm bg-[#81b64c] hover:bg-[#6fa33e] text-[#111] rounded-lg font-semibold transition-colors">
-              S&apos;inscrire
+              S'inscrire
             </Link>
           </div>
         </div>
@@ -32,11 +32,11 @@ export default function Home() {
         <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-tight mb-6">
           Maîtrisez vos
           <span className="text-[#81b64c]"> ouvertures</span>
-          <br />d&apos;échecs
+          <br />d'échecs
         </h1>
 
         <p className="text-base sm:text-lg text-[#8a8580] max-w-2xl mx-auto mb-10 leading-relaxed">
-          Organisez, analysez et pratiquez vos répertoires d&apos;ouvertures avec un outil professionnel inspiré de Chess.com.
+          Organisez, analysez et pratiquez vos répertoires d'ouvertures avec un outil professionnel inspiré de Chess.com.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
@@ -61,13 +61,13 @@ export default function Home() {
           <div className="p-6 rounded-xl bg-[#1a1a1a] border border-[#2d2926] hover:border-[#81b64c]/50 transition-all duration-200">
             <FolderOpen className="w-6 h-6 text-[#81b64c] mb-4" />
             <h3 className="text-lg font-semibold text-[#f4f1ea] mb-2">Organiser</h3>
-            <p className="text-sm text-[#8a8580] leading-relaxed">Dossiers, arbre d&apos;analyse interactif et notation algébrique pour structurer vos répertoires.</p>
+            <p className="text-sm text-[#8a8580] leading-relaxed">Dossiers, arbre d'analyse interactif et notation algébrique pour structurer vos répertoires.</p>
           </div>
 
           <div className="p-6 rounded-xl bg-[#1a1a1a] border border-[#2d2926] hover:border-[#81b64c]/50 transition-all duration-200">
             <Brain className="w-6 h-6 text-[#81b64c] mb-4" />
             <h3 className="text-lg font-semibold text-[#f4f1ea] mb-2">Analyser</h3>
-            <p className="text-sm text-[#8a8580] leading-relaxed">Flèches et carrés colorés, statistiques de coups — l&apos;analyse IA (Stockfish) arrive en Phase C.</p>
+            <p className="text-sm text-[#8a8580] leading-relaxed">Flèches et carrés colorés, statistiques de coups — l'analyse IA (Stockfish) arrive en Phase C.</p>
           </div>
 
           <div className="p-6 rounded-xl bg-[#1a1a1a] border border-[#2d2926] hover:border-[#81b64c]/50 transition-all duration-200">
@@ -112,7 +112,7 @@ export default function Home() {
               <Brain className="w-5 h-5 text-[#81b64c] shrink-0 mt-0.5" />
               <div>
                 <h4 className="font-medium text-[#f4f1ea] mb-0.5">Annotations Visuelles</h4>
-                <p className="text-sm text-[#8a8580]">Marquez vos idées directement sur le plateau et sur l&apos;arbre.</p>
+                <p className="text-sm text-[#8a8580]">Marquez vos idées directement sur le plateau et sur l'arbre.</p>
               </div>
             </div>
 
@@ -128,7 +128,7 @@ export default function Home() {
               <Target className="w-5 h-5 text-[#81b64c] shrink-0 mt-0.5" />
               <div>
                 <h4 className="font-medium text-[#f4f1ea] mb-0.5">Synchronisé</h4>
-                <p className="text-sm text-[#8a8580]">Accédez à vos carnets depuis n&apos;importe où.</p>
+                <p className="text-sm text-[#8a8580]">Accédez à vos carnets depuis n'importe où.</p>
               </div>
             </div>
           </div>
@@ -138,7 +138,7 @@ export default function Home() {
       {/* CTA */}
       <section className="max-w-4xl mx-auto px-4 sm:px-6 py-16 text-center">
         <h2 className="text-3xl sm:text-4xl font-bold text-[#f4f1ea] mb-4">Prêt à progresser ?</h2>
-        <p className="text-[#8a8580] mb-8 max-w-lg mx-auto">Créez votre premier carnet d&apos;ouvertures gratuitement en quelques secondes.</p>
+        <p className="text-[#8a8580] mb-8 max-w-lg mx-auto">Créez votre premier carnet d'ouvertures gratuitement en quelques secondes.</p>
         <Link href="/auth/signup" className="group inline-flex items-center gap-2 px-8 py-3.5 bg-[#81b64c] hover:bg-[#6fa33e] text-[#111] font-semibold text-lg rounded-lg transition-all">
           Créer mon Carnet
           <ArrowRight className="w-5 h-5 group-hover:translate-x-0.5 transition-transform" />

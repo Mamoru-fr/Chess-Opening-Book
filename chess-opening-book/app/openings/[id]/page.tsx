@@ -573,7 +573,7 @@ export default function OpeningPage() {
                     Tout deplier
                   </button>
                   <span className="ml-auto text-xs text-[#b8b2a8]">
-                    Selection multiple: Shift/Ctrl dans l&apos;arbre
+                    Selection multiple: Shift/Ctrl dans l'arbre
                   </span>
                 </div>
 

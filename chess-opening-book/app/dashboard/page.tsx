@@ -95,8 +95,8 @@ export default function Dashboard() {
     <div className="space-y-8">
       {/* Header */}
       <div className="border-b border-[#2d2926] pb-6">
-        <h1 className="text-4xl font-bold text-[#f4f1ea] mb-2">Carnet d&apos;Ouvertures</h1>
-        <p className="text-[#b8b2a8]">Gerez vos ouvertures d&apos;echecs</p>
+        <h1 className="text-4xl font-bold text-[#f4f1ea] mb-2">Carnet d'Ouvertures</h1>
+        <p className="text-[#b8b2a8]">Gerez vos ouvertures d'echecs</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
