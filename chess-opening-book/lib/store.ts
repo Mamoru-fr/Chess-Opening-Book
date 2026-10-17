@@ -6,6 +6,8 @@ export type OpeningNodeData = {
   move?: string;
   color?: string;
   notes?: string;
+  fen?: string;
+  collapsed?: boolean;
 };
 
 type Annotation = {

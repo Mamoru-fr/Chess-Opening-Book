@@ -5,15 +5,32 @@ import Link from "next/link";
 import { getUserFolders, getUserOpenings, createFolder, createOpening } from "@/lib/actions/openingActions";
 import { Loader } from "lucide-react";
 
+type Folder = {
+  id: number;
+  name: string;
+};
+
+type Opening = {
+  id: number;
+  name: string;
+  description?: string | null;
+  folderId?: number | null;
+  createdAt: string;
+};
+
 export default function Dashboard() {
-  const [folders, setFolders] = useState<any[]>([]);
-  const [openings, setOpenings] = useState<any[]>([]);
+  const [folders, setFolders] = useState<Folder[]>([]);
+  const [openings, setOpenings] = useState<Opening[]>([]);
   const [loading, setLoading] = useState(true);
   const [showNewFolder, setShowNewFolder] = useState(false);
   const [showNewOpening, setShowNewOpening] = useState(false);
   const [newFolderName, setNewFolderName] = useState("");
   const [newOpeningName, setNewOpeningName] = useState("");
   const [selectedFolder, setSelectedFolder] = useState<number | null>(null);
+
+  const filteredOpenings = selectedFolder
+    ? openings.filter((opening) => opening.folderId === selectedFolder)
+    : openings;
 
   useEffect(() => {
     loadData();
@@ -26,8 +43,10 @@ export default function Dashboard() {
         getUserFolders(),
         getUserOpenings(),
       ]);
-      setFolders(foldersData || []);
-      setOpenings(openingsData || []);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      setFolders((foldersData || []) as any[]);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      setOpenings((openingsData || []) as any[]);
     } catch (err) {
       console.error("Failed to load data:", err);
     } finally {
@@ -76,8 +95,8 @@ export default function Dashboard() {
     <div className="space-y-8">
       {/* Header */}
       <div className="border-b border-[#2d2926] pb-6">
-        <h1 className="text-4xl font-bold text-[#f4f1ea] mb-2">Carnet d'Ouvertures</h1>
-        <p className="text-[#b8b2a8]">Gérez vos ouvertures d'échecs</p>
+        <h1 className="text-4xl font-bold text-[#f4f1ea] mb-2">Carnet d&apos;Ouvertures</h1>
+        <p className="text-[#b8b2a8]">Gerez vos ouvertures d&apos;echecs</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -194,10 +213,10 @@ export default function Dashboard() {
             )}
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {openings.length === 0 ? (
+              {filteredOpenings.length === 0 ? (
                 <p className="text-[#b8b2a8] col-span-full text-center py-8">Aucune ouverture créée</p>
               ) : (
-                openings.map((opening) => (
+                filteredOpenings.map((opening) => (
                   <Link
                     key={opening.id}
                     href={`/openings/${opening.id}`}

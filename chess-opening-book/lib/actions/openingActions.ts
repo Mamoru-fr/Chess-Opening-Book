@@ -20,6 +20,7 @@ export async function createFolder(name: string, parentId?: number) {
     parentId: parentId || null,
   }).returning();
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return (result as any[])[0];
 }
 
@@ -93,7 +94,9 @@ export async function updateOpening(
   data: {
     name?: string;
     description?: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     nodesData?: any[];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     edgesData?: any[];
     pgn?: string;
   }
@@ -166,7 +169,9 @@ export async function saveNodeAnnotation(
   data: {
     notes?: string;
     color?: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     arrowsData?: any[];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     squaresData?: any[];
   }
 ) {

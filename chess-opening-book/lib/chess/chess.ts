@@ -3,7 +3,7 @@ import { Chess, type Square } from "chess.js";
 export const validateMove = (chess: Chess, move: { from: string; to: string }): boolean => {
   try {
     return chess.move(move) !== null;
-  } catch (e) {
+  } catch {
     return false;
   }
 };

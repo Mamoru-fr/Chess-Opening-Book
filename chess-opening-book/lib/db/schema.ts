@@ -1,4 +1,4 @@
-import {pgTable, serial, varchar, timestamp, integer, decimal, boolean, text, pgEnum, index, jsonb} from "drizzle-orm/pg-core";
+import {pgTable, serial, varchar, timestamp, integer, boolean, text, pgEnum, index, jsonb} from "drizzle-orm/pg-core";
 
 // Enums
 export const userRoleEnum = pgEnum('user_role', ['admin', 'driver', 'customer']);
@@ -21,6 +21,7 @@ export const users = pgTable("users", {
     banExpires: timestamp("ban_expires"),
 });
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const foldersTable: any = pgTable("folders", {
   id: serial("id").primaryKey(),
   userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),

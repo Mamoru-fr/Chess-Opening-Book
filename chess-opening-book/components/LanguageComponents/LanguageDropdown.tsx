@@ -19,14 +19,18 @@ type Props = {
 
 export function LanguageDropdown({className}: Props) {
     const {i18n} = useTranslation();
-    const [windowWidth, setWindowWidth] = useState(0);
+    const [windowWidth, setWindowWidth] = useState(() => {
+        // Initialize with current window width during SSR-safe setup
+        if (typeof window === 'undefined') return 0;
+        return window.innerWidth;
+    });
 
     useEffect(() => {
         // Set initial language from localStorage or default to 'en'
         i18n.changeLanguage(localStorage.getItem('preferredLanguage') || 'en');
-        // Set initial width
-        setWindowWidth(window.innerWidth);
+    }, [i18n]);
 
+    useEffect(() => {
         // Update width on resize
         const handleResize = () => setWindowWidth(window.innerWidth);
         window.addEventListener('resize', handleResize);

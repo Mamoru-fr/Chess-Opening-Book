@@ -6,6 +6,7 @@ import { getUserOpenings } from "@/lib/actions/openingActions";
 import { Loader } from "lucide-react";
 
 export default function OpeningsPage() {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [openings, setOpenings] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 

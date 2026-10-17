@@ -1,7 +1,8 @@
 "use client";
 
 import { useCallback, useState } from "react";
-import { ReactFlow,
+import {
+  ReactFlow,
   addEdge,
   Controls,
   Background,
@@ -12,14 +13,11 @@ import { ReactFlow,
   applyNodeChanges,
   applyEdgeChanges,
 } from "@xyflow/react";
-import { OpeningNodeData, useStore } from "../lib/store";
+import { OpeningNodeData } from "../lib/store";
 
 type OpeningTreeNode = Node<OpeningNodeData>;
 
 type OpeningTreeEdge = Edge;
-
-const initialNodes: OpeningTreeNode[] = [];
-const initialEdges: OpeningTreeEdge[] = [];
 
 const nodeTypes: NodeTypes = {
   default: ({ data }) => (
@@ -43,98 +41,100 @@ const nodeTypes: NodeTypes = {
   ),
 };
 
-let id = 0;
-const getId = () => `node_${id++}`;
-
 export default function OpeningTree({
-  nodes: externalNodes,
-  edges: externalEdges,
+  nodes,
+  edges,
   onNodeClick,
   onAddNode,
-  selectedNode,
+  selectedNodeIds,
+  onSelectedNodeIdsChange,
+  onNodesUpdate,
+  onEdgesUpdate,
+  onApplyColor,
 }: {
   nodes: OpeningTreeNode[];
   edges: OpeningTreeEdge[];
   onNodeClick: (nodeId: string) => void;
   onAddNode: (parentId: string, move: string) => void;
-  selectedNode: string | null;
+  selectedNodeIds: string[];
+  onSelectedNodeIdsChange: (nodeIds: string[]) => void;
+  onNodesUpdate: (nodes: OpeningTreeNode[]) => void;
+  onEdgesUpdate: (edges: OpeningTreeEdge[]) => void;
+  onApplyColor: (nodeIds: string[], color: string) => void;
 }) {
-  const { setNodes: setGlobalNodes, setEdges: setGlobalEdges } = useStore();
   const [modal, setModal] = useState<ModalState>(null);
 
   const onConnect = useCallback(
     (params: Connection) => {
-      // guard: avoid adding duplicate edges which can trigger update loops
-      const exists = externalEdges.some((e) => e.source === params.source && e.target === params.target);
+      const exists = edges.some((e) => e.source === params.source && e.target === params.target);
       if (exists) return;
       const newEdge = { ...params, id: `${params.source}-${params.target}` } as Edge;
-      const nextEdges = addEdge(newEdge, externalEdges);
-      if (nextEdges.length !== externalEdges.length) {
-        setGlobalEdges(nextEdges);
+      const nextEdges = addEdge(newEdge, edges);
+      if (nextEdges.length !== edges.length) {
+        onEdgesUpdate(nextEdges);
       }
     },
-    [externalEdges, setGlobalEdges]
+    [edges, onEdgesUpdate]
   );
 
   const onNodesChange = useCallback(
     (changes: Parameters<typeof applyNodeChanges>[0]) => {
       try {
-        const next = applyNodeChanges(changes, externalNodes) as OpeningTreeNode[];
-        // ensure data has a label to satisfy types and avoid empty objects
+        const next = applyNodeChanges(changes, nodes) as OpeningTreeNode[];
         const normalized = next.map((n) => ({
           ...n,
-          data: { ...(n.data as any), label: (n.data as any).label ?? (n.data as any).move ?? "" },
+          data: {
+            ...(n.data || { label: "" }),
+            label: n.data?.label ?? n.data?.move ?? "",
+          },
         } as OpeningTreeNode));
-
-        const changed = normalized.length !== externalNodes.length || normalized.some((nn, i) => JSON.stringify(nn) !== JSON.stringify(externalNodes[i]));
-        if (changed) setGlobalNodes(normalized);
+        onNodesUpdate(normalized);
       } catch (e) {
-        // swallow and avoid breaking flow
-        // eslint-disable-next-line no-console
-        console.warn('onNodesChange error', e);
+        console.warn("onNodesChange error", e);
       }
     },
-    [externalNodes, setGlobalNodes]
+    [nodes, onNodesUpdate]
   );
 
   const onEdgesChange = useCallback(
     (changes: Parameters<typeof applyEdgeChanges>[0]) => {
       try {
-        const next = applyEdgeChanges(changes, externalEdges) as OpeningTreeEdge[];
-        const changed = next.length !== externalEdges.length || next.some((ne, i) => JSON.stringify(ne) !== JSON.stringify(externalEdges[i]));
-        if (changed) setGlobalEdges(next);
+        const next = applyEdgeChanges(changes, edges) as OpeningTreeEdge[];
+        onEdgesUpdate(next);
       } catch (e) {
-        // eslint-disable-next-line no-console
-        console.warn('onEdgesChange error', e);
+        console.warn("onEdgesChange error", e);
       }
     },
-    [externalEdges, setGlobalEdges]
+    [edges, onEdgesUpdate]
   );
 
   const onNodeDoubleClick = (node: OpeningTreeNode) => {
-    setModal({ type: 'move', nodeId: node.id, value: '' });
+    setModal({ type: "move", nodeId: node.id, value: "" });
   };
 
   const onNodeContextMenu = (node: OpeningTreeNode, e: React.MouseEvent) => {
     e.preventDefault();
-    setModal({ type: 'color', nodeId: node.id, value: '' });
+    setModal({ type: "color", nodeId: node.id, value: "" });
   };
 
-  const onNodeClickHandler = (node: OpeningTreeNode) => {
+  const onNodeClickHandler = (_e: React.MouseEvent, node: OpeningTreeNode) => {
     onNodeClick(node.id);
   };
 
   return (
-    <div className="opening-tree h-[600px] w-full relative">
+    <div className="opening-tree h-150 w-full relative">
       <ReactFlow
-        nodes={externalNodes}
-        edges={externalEdges}
+        nodes={nodes}
+        edges={edges}
         onConnect={onConnect}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
-        onNodeDoubleClick={(_e, node) => onNodeDoubleClick(node as OpeningTreeNode)}
-        onNodeContextMenu={(_e, node) => onNodeContextMenu(node as OpeningTreeNode, _e as any)}
-        onNodeClick={(_e, node) => onNodeClickHandler(node as OpeningTreeNode)}
+        onSelectionChange={({ nodes: selectedNodes }) => {
+          onSelectedNodeIdsChange((selectedNodes || []).map((n) => n.id));
+        }}
+        onNodeDoubleClick={(_e, node) => onNodeDoubleClick(node)}
+        onNodeContextMenu={(e, node) => onNodeContextMenu(node, e)}
+        onNodeClick={(e, node) => onNodeClickHandler(e, node)}
         nodeTypes={nodeTypes}
         fitView
         fitViewOptions={{ padding: 0.5 }}
@@ -143,7 +143,7 @@ export default function OpeningTree({
         <Background />
       </ReactFlow>
       {/* Inline modal for move / color input */}
-      {modal && modal.type === 'move' && (
+      {modal && modal.type === "move" && (
         <div className="absolute left-1/2 top-1/2 z-50 w-[320px] -translate-x-1/2 -translate-y-1/2 rounded-lg bg-[#262421] p-4 shadow-lg">
           <div className="mb-2 text-sm font-medium text-[#f4f1ea]">Entrez le coup (ex: e4, Nf3):</div>
           <input
@@ -169,7 +169,7 @@ export default function OpeningTree({
         </div>
       )}
 
-      {modal && modal.type === 'color' && (
+      {modal && modal.type === "color" && (
         <div className="absolute left-1/2 top-1/2 z-50 w-[320px] -translate-x-1/2 -translate-y-1/2 rounded-lg bg-[#262421] p-4 shadow-lg">
           <div className="mb-2 text-sm font-medium text-[#f4f1ea]">Choisir une couleur pour le noeud:</div>
           <input
@@ -185,16 +185,8 @@ export default function OpeningTree({
               onClick={() => {
                 if (modal && modal.value.trim()) {
                   const color = modal.value.trim();
-                  const updatedNodes = externalNodes.map((n) => {
-                    if (n.id === modal.nodeId) {
-                      const newData = { ...n.data, color };
-                      if (n.data && (n.data as any).color === color) return n;
-                      return { ...n, data: newData };
-                    }
-                    return n;
-                  });
-                  const changed = updatedNodes.some((u, i) => u !== externalNodes[i]);
-                  if (changed) setGlobalNodes(updatedNodes);
+                  const targets = selectedNodeIds.length > 0 ? selectedNodeIds : [modal.nodeId];
+                  onApplyColor(targets, color);
                 }
                 setModal(null);
               }}
@@ -209,4 +201,4 @@ export default function OpeningTree({
   );
 }
 
-type ModalState = { type: 'move' | 'color'; nodeId: string; value: string } | null;
+type ModalState = { type: "move" | "color"; nodeId: string; value: string } | null;
