@@ -26,7 +26,7 @@ export default function Home() {
       <section className="max-w-4xl mx-auto px-4 sm:px-6 pt-16 sm:pt-24 pb-16 text-center">
         <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#81b64c]/10 border border-[#81b64c]/20 text-[#81b64c] text-sm font-medium mb-8">
           <Zap className="w-3.5 h-3.5" />
-          Propulsé par Stockfish
+          Arbre, annotations, drill
         </div>
 
         <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-tight mb-6">
@@ -67,13 +67,13 @@ export default function Home() {
           <div className="p-6 rounded-xl bg-[#1a1a1a] border border-[#2d2926] hover:border-[#81b64c]/50 transition-all duration-200">
             <Brain className="w-6 h-6 text-[#81b64c] mb-4" />
             <h3 className="text-lg font-semibold text-[#f4f1ea] mb-2">Analyser</h3>
-            <p className="text-sm text-[#8a8580] leading-relaxed">Stockfish intégré, flèches et carrés colorés, évaluation en temps réel de chaque position.</p>
+            <p className="text-sm text-[#8a8580] leading-relaxed">Flèches et carrés colorés, statistiques de coups — l&apos;analyse IA (Stockfish) arrive en Phase C.</p>
           </div>
 
           <div className="p-6 rounded-xl bg-[#1a1a1a] border border-[#2d2926] hover:border-[#81b64c]/50 transition-all duration-200">
             <PenTool className="w-6 h-6 text-[#81b64c] mb-4" />
             <h3 className="text-lg font-semibold text-[#f4f1ea] mb-2">Pratiquer</h3>
-            <p className="text-sm text-[#8a8580] leading-relaxed">Mode Puzzle et mode Drill pour tester et mémoriser vos lignes efficacement.</p>
+            <p className="text-sm text-[#8a8580] leading-relaxed">Mode Drill pour tester et mémoriser vos lignes efficacement — mode Puzzle à venir.</p>
           </div>
         </div>
       </section>
@@ -111,8 +111,8 @@ export default function Home() {
             <div className="flex gap-3 items-start">
               <Brain className="w-5 h-5 text-[#81b64c] shrink-0 mt-0.5" />
               <div>
-                <h4 className="font-medium text-[#f4f1ea] mb-0.5">Stockfish Intégré</h4>
-                <p className="text-sm text-[#8a8580]">Le meilleur moteur d&apos;analyse directement intégré.</p>
+                <h4 className="font-medium text-[#f4f1ea] mb-0.5">Annotations Visuelles</h4>
+                <p className="text-sm text-[#8a8580]">Marquez vos idées directement sur le plateau et sur l&apos;arbre.</p>
               </div>
             </div>
 
@@ -153,7 +153,7 @@ export default function Home() {
               <span className="text-xl">♔</span>
               <span className="font-semibold text-[#81b64c]">Opening Book</span>
             </div>
-            <p className="text-sm text-[#6d6a66]">© 2026 Chess Opening Book · Inspiré de Chess.com · Alimenté par Stockfish</p>
+            <p className="text-sm text-[#6d6a66]">© 2026 Chess Opening Book · Inspiré de Chess.com</p>
           </div>
         </div>
       </footer>
