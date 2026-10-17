@@ -2,7 +2,7 @@
 
 import { ReactNode } from "react";
 import Link from "next/link";
-import { useSession } from "@/lib/auth/auth.client";
+import { useSession, authClient } from "@/lib/auth/auth.client";
 import { useRouter } from "next/navigation";
 
 export default function RootLayout({ children }: { children: ReactNode }) {
@@ -48,17 +48,14 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               <Link href="/openings" className="text-[#f4f1ea] hover:text-[#81b64c] transition-colors">
                 Ouvertures
               </Link>
-              <Link href="/folders" className="text-[#f4f1ea] hover:text-[#81b64c] transition-colors">
-                Dossiers
-              </Link>
             </div>
           </div>
           <div className="flex items-center gap-4">
             <span className="text-[#b8b2a8]">{session.user?.email}</span>
             <button
-              onClick={() => {
-                // Logout logic here
-                router.push("/");
+              onClick={async () => {
+                await authClient.signOut();
+                router.push("/auth/signin");
               }}
               className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
             >

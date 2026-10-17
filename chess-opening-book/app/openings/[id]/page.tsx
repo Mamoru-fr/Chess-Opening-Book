@@ -14,7 +14,7 @@ import {
   updateOpening,
 } from "@/lib/actions/openingActions";
 import { Node, Edge } from "@xyflow/react";
-import { OpeningNodeData } from "@/lib/store";
+import { OpeningNodeData } from "@/types";
 import { Loader } from "lucide-react";
 
 const OpeningTree = dynamic(() => import("@/components/OpeningTree"), { ssr: false });
@@ -241,8 +241,7 @@ export default function OpeningPage() {
 
     useEffect(() => {
       if (currentTab !== "analysis") return;
-      // Stockfish analysis is disabled for now due to build issues with stockfish.wasm
-      // Analysis tab will show message to enable later
+      // Analyse IA (Stockfish) : debranchee en session 1, reintegration prevue en Phase C (PROJET.md)
       setAnalysisLoading(false);
       setAnalysisBestMove("-");
       
@@ -303,6 +302,16 @@ export default function OpeningPage() {
         .filter(Boolean) as Node<OpeningNodeData>[];
       return out;
     }, [testNodes, testEdges, testCurrentNodeId]);
+
+    const handleNodeClick = useCallback((id: string) => setSelectedNodeIds([id]), []);
+
+    const handleNodesUpdate = useCallback((nextNodes: Node<OpeningNodeData>[]) => {
+      setNodes(nextNodes);
+    }, []);
+
+    const handleEdgesUpdate = useCallback((nextEdges: Edge[]) => {
+      setEdges(nextEdges);
+    }, []);
 
     const handleSaveAll = async () => {
       try {
@@ -571,36 +580,12 @@ export default function OpeningPage() {
                 <OpeningTree
                   nodes={visibleNodes}
                   edges={visibleEdges}
-                  onNodeClick={useCallback((id) => setSelectedNodeIds([id]), [])}
+                  onNodeClick={handleNodeClick}
                   onAddNode={handleAddNode}
                   selectedNodeIds={selectedNodeIds}
                   onSelectedNodeIdsChange={setSelectedNodeIds}
-                  onNodesUpdate={useCallback((changes) => {
-                    setNodes((prev) => {
-                      const updated = [...prev];
-                      changes.forEach((c) => {
-                        const idx = updated.findIndex((n) => n.id === c.id);
-                        if (idx !== -1 && c.position) {
-                          updated[idx] = { ...updated[idx], position: c.position };
-                        }
-                      });
-                      return updated;
-                    });
-                  }, [])}
-                  onEdgesUpdate={useCallback((changes) => {
-                    setEdges((prev) => {
-                      let updated = [...prev];
-                      changes.forEach((c) => {
-                        if (c.type === 'remove') {
-                          updated = updated.filter((e) => e.id !== c.id);
-                        } else if (c.type === 'select') {
-                          const idx = updated.findIndex((e) => e.id === c.id);
-                          if (idx !== -1) updated[idx] = { ...updated[idx], selected: c.selected };
-                        }
-                      });
-                      return updated;
-                    });
-                  }, [])}
+                  onNodesUpdate={handleNodesUpdate}
+                  onEdgesUpdate={handleEdgesUpdate}
                   onApplyColor={handleApplyColor}
                 />
               </div>
@@ -672,10 +657,10 @@ export default function OpeningPage() {
           {currentTab === "analysis" && (
             <div className="grid gap-4 md:grid-cols-2">
               <div className="bg-[#262421] border border-[#2d2926] rounded-xl p-6">
-                <h3 className="mb-3 text-lg font-semibold text-[#f4f1ea]">Stockfish</h3>
+                <h3 className="mb-3 text-lg font-semibold text-[#f4f1ea]">Meilleur coup (IA)</h3>
                 <p className="text-sm text-[#b8b2a8] mb-2">Position analysee: {selectedFen}</p>
                 <p className="text-[#f4f1ea]">
-                  Meilleur coup: {analysisLoading ? "Analyse en cours..." : analysisBestMove}
+                  Analyse IA (Stockfish) : a venir en Phase C. En attendant, les coups les plus joues dans tes bases ci-contre.
                 </p>
               </div>
               <div className="bg-[#262421] border border-[#2d2926] rounded-xl p-6">

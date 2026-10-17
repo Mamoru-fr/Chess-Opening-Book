@@ -16,3 +16,13 @@ export type Annotation = {
   arrows: Array<{ from: Square; to: Square; color: string }>;
   squares: Array<{ square: Square; color: string }>;
 };
+
+// Opening tree node data (ReactFlow)
+export type OpeningNodeData = {
+  label: string;
+  move?: string;
+  color?: string;
+  notes?: string;
+  fen?: string;
+  collapsed?: boolean;
+};

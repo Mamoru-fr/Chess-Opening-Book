@@ -13,7 +13,7 @@ import {
   applyNodeChanges,
   applyEdgeChanges,
 } from "@xyflow/react";
-import { OpeningNodeData } from "../lib/store";
+import { OpeningNodeData } from "../types";
 
 type OpeningTreeNode = Node<OpeningNodeData>;
 
